@@ -192,8 +192,8 @@ Under **Environment Variables**, add:
 
 | Key | Example Value | Description |
 | :--- | :--- | :--- |
-| `9ROUTER_BASE_URL` | `https://your-9router-domain.com/v1` | Publicly reachable HTTPS endpoint of your 9Router gateway. |
-| `9ROUTER_API_KEY` | *(Optional server key)* | Default server gateway key (optional; users can provide their own in-game). |
+| `ROUTER_BASE_URL` | `https://your-9router-domain.com/v1` | Publicly reachable HTTPS endpoint of your 9Router gateway. |
+| `ROUTER_API_KEY` | *(Optional server key)* | Default server gateway key (optional; users can provide their own in-game). |
 | `DEFAULT_MODEL` | `ag/gemini-3.8-flash-medium` | Default AI model ID. |
 
 > ⚠️ **Important Network Note for Remote Deployment**:

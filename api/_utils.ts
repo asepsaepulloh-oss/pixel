@@ -1,8 +1,13 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 
 export function resolveEndpoint(req: IncomingMessage, customBaseUrl?: string): string {
-  const headerUrl = req.headers['x-9router-base-url'] as string | undefined;
-  const envUrl = process.env['9ROUTER_BASE_URL'] || process.env.NINE_ROUTER_BASE_URL;
+  const headerUrl = (req.headers['x-router-base-url'] || req.headers['x-9router-base-url']) as string | undefined;
+  const envUrl =
+    process.env.ROUTER_BASE_URL ||
+    process.env.GATEWAY_BASE_URL ||
+    process.env.AI_BASE_URL ||
+    process.env.NINE_ROUTER_BASE_URL ||
+    process.env['9ROUTER_BASE_URL'];
   const rawUrl = headerUrl || customBaseUrl || envUrl || 'http://127.0.0.1:20128/v1';
 
   try {
@@ -26,7 +31,14 @@ export function resolveApiKey(req: IncomingMessage, customKey?: string): string 
   if (customKey && customKey.trim().length > 0) {
     return customKey.trim();
   }
-  return process.env['9ROUTER_API_KEY'] || process.env.NINE_ROUTER_API_KEY || undefined;
+  return (
+    process.env.ROUTER_API_KEY ||
+    process.env.GATEWAY_API_KEY ||
+    process.env.AI_API_KEY ||
+    process.env.NINE_ROUTER_API_KEY ||
+    process.env['9ROUTER_API_KEY'] ||
+    undefined
+  );
 }
 
 export function maskSecret(secret?: string): string {

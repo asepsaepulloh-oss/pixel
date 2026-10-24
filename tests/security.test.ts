@@ -41,4 +41,16 @@ describe('Security & URL Resolution', () => {
     const key = resolveApiKey(fakeReq);
     expect(key).toBe('9router-secret-token-xyz');
   });
+
+  it('supports environment variables without numbers for Vercel compatibility', () => {
+    const fakeReq = { headers: {} } as IncomingMessage;
+    
+    process.env.ROUTER_BASE_URL = 'https://my-gateway.domain.com/v1/';
+    expect(resolveEndpoint(fakeReq)).toBe('https://my-gateway.domain.com/v1');
+    delete process.env.ROUTER_BASE_URL;
+
+    process.env.ROUTER_API_KEY = 'sk-secret-from-env';
+    expect(resolveApiKey(fakeReq)).toBe('sk-secret-from-env');
+    delete process.env.ROUTER_API_KEY;
+  });
 });
